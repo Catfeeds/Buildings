@@ -49,4 +49,17 @@ class AreasController extends APIBaseController
         return $this->sendResponse($res,'修改区域信息成功');
     }
 
+    // 获取所有区域
+    public function getAllArea()
+    {
+        $areas = Area::all()->map(function($area) {
+            return [
+                'value' => $area->id,
+                'label' => $area->name
+            ];
+        });
+
+        return $this->sendResponse($areas,'获取所有区域成功');
+    }
+
 }

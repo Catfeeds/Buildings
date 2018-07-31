@@ -48,4 +48,18 @@ class CitiesController extends APIBaseController
         if (empty($res)) return $this->sendError('城市信息修改失败');
         return $this->sendResponse($res,'城市信息修改成功');
     }
+
+    // 获取所有城市
+    public function getAllCity()
+    {
+        $citys = City::all()->map(function($city) {
+            return [
+                'value' => $city->guid,
+                'label' => $city->name
+            ];
+        });
+
+        return $this->sendResponse($citys,'获取所有城市成功');
+    }
+
 }
