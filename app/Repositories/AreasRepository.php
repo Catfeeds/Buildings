@@ -13,10 +13,16 @@ class AreasRepository extends Model
         $request
     )
     {
-        return Area::paginate($request->per_page??10);
+        if (empty($request->city_guid)) {
+            $where = array();
+        } else {
+            $where = ['city_guid' => $request->city_guid];
+        }
+
+        return Area::where($where)->paginate($request->per_page??10);
     }
 
-    // 添加区域
+    // 添加区域信息
     public function addArea(
         $request
     )
@@ -28,6 +34,7 @@ class AreasRepository extends Model
         ]);
     }
 
+    // 修改区域信息
     public function updateArea(
         $request,
         $area

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\AreasRequest;
 use App\Models\Area;
+use App\Models\City;
 use App\Repositories\AreasRepository;
 use Illuminate\Http\Request;
 
@@ -54,12 +55,38 @@ class AreasController extends APIBaseController
     {
         $areas = Area::all()->map(function($area) {
             return [
-                'value' => $area->id,
+                'value' => $area->guid,
                 'label' => $area->name
             ];
         });
 
         return $this->sendResponse($areas,'获取所有区域成功');
+    }
+
+    // 所有区的下拉数据
+    public function areasSelect()
+    {
+        $cities = City::all();
+        $city_box = array();
+        foreach ($cities as $index => $city) {
+            // 循环城市 将区域的
+            $areas = Area::where('city_guid', $city->guid)->get();
+            $area_box = array();
+            foreach ($areas as $area) {
+                $item = array(
+                    'value' => $area->guid,
+                    'label' => $area->name,
+                );
+                $area_box[] = $item; // 城市下的区
+            }
+            $city_item = array(
+                'value' => $city->guid,
+                'label' => $city->name,
+                'children' => $area_box
+            );
+            $city_box[] = $city_item; // 所有城市
+        }
+        return $this->sendResponse($city_box, '获取成功');
     }
 
 }

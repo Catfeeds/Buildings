@@ -3,19 +3,51 @@
 namespace App\Repositories;
 
 use App\Handler\Common;
+use App\Models\Area;
 use App\Models\Building;
 use App\Models\BuildingBlock;
+use App\Models\BuildingFeature;
 use App\Models\BuildingHasFeature;
+use App\Models\BuildingLabel;
 use Illuminate\Database\Eloquent\Model;
 
 class BuildingsRepository extends Model
 {
     // 楼盘列表
     public function buildingList(
-        $request
+        $request,
+        $service
     )
     {
-        return Building::paginate($request->per_page??10);
+        $result = Building::with('buildingBlock', 'features', 'label', 'area', 'block')->orderBy('updated_at', 'desc');
+
+        if ($request->city_guid && $request->area_guid && $request->building_guid) {
+            $result = $result->where(['id' => $request->building_guid]);
+        } elseif ($request->city_guid && $request->area_guid && empty($request->building_guid)) {
+            $buildingGuid = array_column(Area::find($request->area_guid)->building->flatten()->toArray(), 'guid');
+            $result = $result->whereIn('guid', $buildingGuid);
+        } elseif ($request->city_guid && empty($request->area_guid) && empty($request->building_guid)) {
+            // 通过城市查出区域
+            $areaGuids = Area::where('city_guid', $request->city_guid)->pluck('guid')->toArray();
+
+            $areas = Area::whereIn('guid', $areaGuids)->with('building')->get();
+
+            $buildingGuid = $areas->map(function($area) {
+                return [
+                    array_column(Area::find($area->guid)->building->flatten()->toArray(), 'guid')
+                ];
+            });
+
+            $result = $result->whereIn('guid', $buildingGuid->flatten()->toArray());
+        }
+
+        $buildings = $result->paginate($request->per_page??10);
+        foreach($buildings as $v) {
+            $service->features($v);
+            $service->label($v);
+            $service->getAddress($v);
+        }
+        return $buildings;
     }
 
     // 添加楼盘
@@ -156,5 +188,27 @@ class BuildingsRepository extends Model
             \DB::rollBack();
             return false;
         }
+    }
+
+    // 添加楼盘标签
+    public function addBuildingLabel($request)
+    {
+        return BuildingLabel::create([
+            'building_guid' => $request->building_guid
+        ]);
+    }
+
+    // 删除楼盘标签
+    public function delBuildingLabel(
+        $guid
+    )
+    {
+        return BuildingLabel::where('building_guid', $guid)->first()->delete();
+    }
+
+    // 获取楼盘特色下拉数据
+    public function getBuildingFeatureList()
+    {
+        return BuildingFeature::all();
     }
 }

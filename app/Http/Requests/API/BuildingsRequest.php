@@ -147,8 +147,6 @@ class BuildingsRequest extends FormRequest
                     'big_album' => 'array',
                     'describe' => 'max:65535',
 
-                    'building_block' => 'required|array',    // 楼栋
-
                     'building_feature' => 'array',  // 楼盘特色
                     'building_feature.*' => [
                         'required',

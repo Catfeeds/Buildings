@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Traits\QiNiu;
 use App\Http\Requests\API\CitiesRequest;
 use App\Models\City;
 use App\Repositories\CitiesRepository;
@@ -9,6 +10,8 @@ use Illuminate\Http\Request;
 
 class CitiesController extends APIBaseController
 {
+    use QiNiu;
+
     // 城市列表
     public function index(
         Request $request,

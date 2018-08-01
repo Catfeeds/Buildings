@@ -98,6 +98,10 @@ class BlocksRequest extends FormRequest
                     'y' => 'required|max:32',
                     'baidu_coord' => 'max:65535',
                 ];
+            case 'addRecommend':
+                return [
+                    'recommend' => 'nullable|numeric|between:1,2',
+                ];
             default:
                 {
                     return [];
