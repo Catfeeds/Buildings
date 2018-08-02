@@ -32,9 +32,6 @@ class BlocksRepository extends Model
                 'guid' => Common::getUuid(),
                 'area_guid' => $request->area_guid,
                 'name' => $request->name,
-                'recommend' => $request->recommend,
-                'agent_name' => $request->agent_name,
-                'agent_pic' => $request->agent_pic
             ]);
             if (empty($block)) throw new \Exception('商圈添加失败');
 
@@ -76,9 +73,6 @@ class BlocksRepository extends Model
         try {
             $block->area_guid = $request->area_guid;
             $block->name = $request->name;
-            $block->recommend = $request->recommend;
-            $block->agent_name = $request->agent_name;
-            $block->agent_pic = $request->agent_pic;
             if (!$block->save()) throw new \Exception('商圈修改失败');
 
             $blockLocation = BlockLocation::where('block_guid', $block->guid)->first();
@@ -106,14 +100,5 @@ class BlocksRepository extends Model
             \DB::rollBack();
             return false;
         }
-    }
-
-    // 商圈添加推荐
-    public function addRecommend(
-        $guid,
-        $request
-    )
-    {
-        return Block::where('guid', $guid)->update(['recommend' => $request->recommend]);
     }
 }

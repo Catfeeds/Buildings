@@ -26,27 +26,25 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('block_locations', 'BlocksController@blockLocations');
     // 获取所有商圈
     Route::get('all_building_blocks', 'BlocksController@allBuildingBlock');
-    // 商圈添加推荐
-    Route::post('add_recommend/{guid}', 'BlocksController@addRecommend');
     // 楼盘
     Route::resource('/buildings', 'BuildingsController');
     // 楼盘下拉
     Route::get('/buildings_select', 'BuildingsController@buildingSelect');
-    // 添加楼盘标签
-    Route::post('add_building_label', 'BuildingsController@addBuildingLabel');
     // 楼盘搜索
     Route::get('/building_search_select', 'BuildingsController@buildingSearchSelect');
-    // 楼盘特色下拉数据
-    Route::get('building_feature_list', 'BuildingsController@buildingFeatureList');
-    // 楼盘特色
-    Route::resource('/building_features', 'BuildingFeaturesController');
 
+    // 拿到楼盘下的所有楼座
+    Route::resource('/building_blocks', 'BuildingBlocksController');
+    // 所有的楼座下拉数据
+    Route::get('/building_blocks_all', 'BuildingBlocksController@buildingBlocksSelect');
+    // 楼座分页列表
+    Route::get('/building_blocks_list', 'BuildingBlocksController@allBlocks');
     // 修改某个楼座的名称
     Route::post('/change_name_unit/{building_block}', 'BuildingBlocksController@changeNameUnit');
     // 添加楼座（名称、楼盘）
-    Route::post('/add_name_unit', 'BuildingBlockController@addNameUnit');
+    Route::post('/add_name_unit', 'BuildingBlocksController@addNameUnit');
     // 补充楼座信息
-    Route::post('/add_block_info/{building_block}', 'BuildingBlockController@addBlockInfo');
+    Route::post('/add_block_info/{building_block}', 'BuildingBlocksController@addBlockInfo');
 
 
 

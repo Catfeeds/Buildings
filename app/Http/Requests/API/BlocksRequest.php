@@ -70,9 +70,6 @@ class BlocksRequest extends FormRequest
                             Block::all()->pluck('name')->toArray()
                         )
                     ],
-                    'recommend' => 'nullable|numeric|between:1,2',
-                    'agent_name' => 'max:32',
-                    'agent_pic' => 'max:32',
                     'x' => 'required|max:32',
                     'y' => 'required|max:32',
                     'baidu_coord' => 'max:65535',
@@ -91,16 +88,9 @@ class BlocksRequest extends FormRequest
                         'max:32',
                         Rule::unique('blocks')->ignore($this->route('block')->guid,'guid'),
                     ],
-                    'recommend' => 'nullable|numeric|between:1,2',
-                    'agent_name' => 'max:32',
-                    'agent_pic' => 'max:32',
                     'x' => 'required|max:32',
                     'y' => 'required|max:32',
                     'baidu_coord' => 'max:65535',
-                ];
-            case 'addRecommend':
-                return [
-                    'recommend' => 'nullable|numeric|between:1,2',
                 ];
             default:
                 {

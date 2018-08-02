@@ -5,8 +5,6 @@ namespace App\Http\Requests\API;
 use App\Models\Area;
 use App\Models\Block;
 use App\Models\Building;
-use App\Models\BuildingFeature;
-use App\Models\BuildingHasFeature;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -36,14 +34,12 @@ class BuildingsRequest extends FormRequest
                     'name.not_in' => '该楼盘名已存在',
                     'area_guid.in' => '区域必须存在',
                     'block_guid.in' => '商圈必须存在',
-                    'building_feature.*.in' => '楼盘特色必须存在'
                 ];
             case 'update':
                 return [
                     'name.unique' => '该楼盘名已存在',
                     'area_guid.in' => '区域必须存在',
                     'block_guid.in' => '商圈必须存在',
-                    'building_feature.*.in' => '楼盘特色必须存在'
                 ];
             default:
                 {
@@ -101,14 +97,6 @@ class BuildingsRequest extends FormRequest
                     'describe' => 'max:65535',
 
                     'building_block' => 'required|array',    // 楼盘
-
-                    'building_feature' => 'array',  // 楼盘特色
-                    'building_feature.*' => [
-                        'required',
-                        Rule::in(
-                            BuildingFeature::all()->pluck('guid')->toArray()
-                        )
-                    ]
                 ];
             case 'update':
                 return [
@@ -146,15 +134,6 @@ class BuildingsRequest extends FormRequest
                     'album' => 'array',
                     'big_album' => 'array',
                     'describe' => 'max:65535',
-
-                    'building_feature' => 'array',  // 楼盘特色
-                    'building_feature.*' => [
-                        'required',
-                        Rule::in(
-                            BuildingFeature::all()->pluck('guid')->toArray()
-                        )
-                    ]
-
                 ];
             default:
                 {

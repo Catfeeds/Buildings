@@ -8,43 +8,6 @@ use App\Models\Building;
 
 class BuildingsService
 {
-    // 获取楼盘特色数据
-    public function features($res)
-    {
-        //楼盘特色数组 只显示前3条
-        $res->feature = $res->features->pluck('name')->take(3)->toArray();
-        //楼盘特色 固定格式显示
-        $res->feature_cn = $res->features->pluck('name', 'guid')->toArray();
-        //楼盘特色对应图片,名称格式
-        $res->feature_name_pic = $res->features->map(function($v) {
-            return [
-                'name' => $v->name,
-                'pic' => config('setting.qiniu_url') . $v->pic
-            ];
-        });
-        $res->pc_feature_name_pic = $res->features->map(function($v) {
-            return [
-                'name' => $v->name,
-                'pic' => config('setting.qiniu_url') . $v->pc_pic
-            ];
-        });
-    }
-
-    /**
-     * 说明: 楼盘是否有标签
-     *
-     * @param $res
-     * @author 刘坤涛
-     */
-    public function label($res)
-    {
-        if ($res->label) {
-            $res->label_cn = true;
-        } else {
-            $res->label_cn = false;
-        }
-    }
-
     /**
      * 说明: 获取楼盘对应地址商圈名称格式
      *

@@ -20,7 +20,6 @@ class BlocksService
             foreach ($blocks as $block) {
                 $res['id'] = $block->guid;
                 $res['name'] = $block->name;
-                $res['recommend'] = $block->recommend;
                 $block_box[] = $res;
             }
 

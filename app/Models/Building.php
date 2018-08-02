@@ -14,7 +14,9 @@ class Building extends BaseModel
     protected $appends = [
         'type_cn',
         'pic_url_cn',
-        'pc_pic_url'
+        'pc_pic_url',
+        'area_label',
+        'city_guid'
     ];
 
     // 楼座
@@ -27,18 +29,6 @@ class Building extends BaseModel
     public function block()
     {
         return $this->belongsTo(Block::class);
-    }
-
-    // 特色
-    public function features()
-    {
-        return $this->belongsToMany(BuildingFeature::class, 'building_has_features');
-    }
-
-    // 标签
-    public function label()
-    {
-        return $this->hasOne(BuildingLabel::class);
     }
 
     //区域
@@ -89,5 +79,20 @@ class Building extends BaseModel
                 'url' => config('setting.qiniu_url') . $img
             ];
         });
+    }
+
+    // 区域信息
+    public function getAreaLabelAttribute()
+    {
+        $area = $this->area;
+        if (empty($area)) return;
+        return $area->name;
+    }
+
+    // 城市guid
+    public function getCityGuidAttribute()
+    {
+        if (empty($this->area)) return;
+        return $this->area->city->guid;
     }
 }

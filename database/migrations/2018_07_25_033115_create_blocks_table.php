@@ -17,9 +17,6 @@ class CreateBlocksTable extends Migration
             $table->char('guid',32)->primary()->comment('主键GUID');
             $table->string('name', 32)->nullable()->comment('商圈名');
             $table->char('area_guid',32)->nullable()->comment('区域guid');
-            $table->tinyInteger('recommend')->default(2)->comment('是否推荐 1: 是 2: 否');
-            $table->string('agent_name',32)->nullable()->comment('经纪人名称');
-            $table->string('agent_pic',32)->nullable()->comment('经纪人图片');
             $table->softDeletes();
             $table->timestamps();
         });

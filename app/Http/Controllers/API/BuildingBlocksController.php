@@ -3,12 +3,25 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\BuildingBlocksRequest;
+use App\Models\Area;
+use App\Models\Building;
 use App\Models\BuildingBlock;
+use App\Models\City;
 use App\Repositories\BuildingBlocksRepository;
 use Illuminate\Http\Request;
 
 class BuildingBlocksController extends APIBaseController
 {
+    // 拿到楼盘下的所有楼座
+    public function index(
+        Request $request,
+        BuildingBlocksRepository $repository
+    )
+    {
+        $buildingBlocks = $repository->getAllBuildingBlock($request);
+        return $this->sendResponse($buildingBlocks, '获取成功');
+    }
+
     // 单条楼座信息
     public function show(BuildingBlock $buildingBlock)
     {
@@ -71,4 +84,52 @@ class BuildingBlocksController extends APIBaseController
         $res = $repository->addBlockInfo($buildingBlock, $request);
         return $this->sendResponse($res, '修改成功');
     }
+
+    // 所有的楼座下拉数据
+    public function buildingBlocksSelect()
+    {
+        $cities = City::all();
+        $city_box = array();
+        foreach ($cities as $index => $city) {
+            // 循环城市 将区域的
+            $areas = Area::where('city_guid', $city->guid)->get();
+            $area_box = array();
+            foreach ($areas as $area) {
+                $buildings = Building::where('area_guid', $area->guid)->get();
+                $building_box = array();
+                foreach ($buildings as $building) {
+                    $buildingBlocks = BuildingBlock::where('building_guid', $building->guid)->get();
+                    $buildingBlocks = $buildingBlocks->sortBy('name')->values();
+                    $buildingBlockBox = array();
+                    foreach ($buildingBlocks as $buildingBlock) {
+                        $item = array(
+                            'value' => $buildingBlock->guid,
+                            'label' => $buildingBlock->block_info,
+                        );
+                        $buildingBlockBox[] = $item;
+                    }
+                    $item = array(
+                        'value' => $building->guid,
+                        'label' => $building->name,
+                        'children' => $buildingBlockBox
+                    );
+                    $building_box[] = $item;
+                }
+                $area_item = array(
+                    'value' => $area->guid,
+                    'label' => $area->name,
+                    'children' => $building_box
+                );
+                $area_box[] = $area_item;
+            }
+            $city_item = array(
+                'value' => $city->guid,
+                'label' => $city->name,
+                'children' => $area_box
+            );
+            $city_box[] = $city_item; // 所有城市
+        }
+        return $this->sendResponse($city_box, '获取成功');
+    }
+
 }

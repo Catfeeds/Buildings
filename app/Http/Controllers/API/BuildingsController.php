@@ -44,11 +44,9 @@ class BuildingsController extends APIBaseController
 
     // 楼盘修改之前原始数据
     public function edit(
-        Building $building,
-        BuildingsService $service
+        Building $building
     )
     {
-        $service->features($building);
         $building->city_guid = $building->area->city->guid;
         return $this->sendResponse($building,'楼盘修改之前原始数据');
     }
@@ -136,34 +134,5 @@ class BuildingsController extends APIBaseController
             $city_box[] = $city_item; // 所有城市
         }
         return $this->sendResponse($city_box, '获取成功');
-    }
-
-    // 添加楼盘标签
-    public function addBuildingLabel(
-        Request $request,
-        BuildingsRepository $repository
-    )
-    {
-        $res = $repository->addBuildingLabel($request);
-        return $this->sendResponse($res, '楼盘标签添加成功');
-    }
-
-    // 删除楼盘标签
-    public function delBuildingLabel(
-        $guid,
-        BuildingsRepository $repository
-    )
-    {
-        $res = $repository->delBuildingLabel($guid);
-        return $this->sendResponse($res, '楼盘标签删除成功');
-    }
-
-    // 获取楼盘特色下拉数据
-    public function buildingFeatureList(
-        BuildingsRepository $repository
-    )
-    {
-        $res = $repository->getBuildingFeatureList()->pluck('name', 'guid')->toArray();
-        return $this->sendResponse($res, '获取楼盘特色下拉数据成功');
     }
 }

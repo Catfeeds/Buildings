@@ -8,13 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class BuildingBlocksRepository extends Model
 {
+    // 拿到楼盘下的所有楼座
+    public function getAllBuildingBlock(
+        $request
+    )
+    {
+        return BuildingBlock::where('building_guid', $request->building_guid)->with('building.area')->get();
+    }
+    
     // 获取所有楼座的列表
     public function getList(
         $per_page,
         $request
     )
     {
-        $buildingBlock = BuildingBlock::orderBy('updated_at', 'desc');
+        $buildingBlock = BuildingBlock::with('building.area')->orderBy('updated_at', 'desc');
         if (!empty($request->area_guid)) {
             // 传了城区 查城区下的楼盘 再查楼盘下的楼座
             $buildings = Building::where('area_guid', $request->area_guid)->get()->pluck('guid')->toArray();

@@ -90,15 +90,4 @@ class BlocksController extends APIBaseController
         $result= $blocksService->allBuildingBlock();
         return $this->sendResponse($result,'所有商圈信息获取成功');
     }
-
-    // 商圈添加推荐
-    public function addRecommend(
-        $guid,
-        BlocksRequest $request,
-        BlocksRepository $repository
-    )
-    {
-        $res = $repository->addRecommend($guid, $request);
-        return $this->sendResponse($res, '操作成功');
-    }
 }
