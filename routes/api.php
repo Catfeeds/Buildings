@@ -46,7 +46,7 @@ Route::group(['namespace' => 'API'], function () {
     // 补充楼座信息
     Route::post('/add_block_info/{building_block}', 'BuildingBlocksController@addBlockInfo');
 
-    // adoptBuildingBlockGetCity
+    // 通过楼座获取城市
     Route::get('/adopt_building_block_get_city', 'BuildingBlocksController@adoptBuildingBlockGetCity');
 
 });
