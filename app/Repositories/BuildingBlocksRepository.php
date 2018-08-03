@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Handler\Common;
 use App\Models\Building;
 use App\Models\BuildingBlock;
 use Illuminate\Database\Eloquent\Model;
@@ -52,6 +53,7 @@ class BuildingBlocksRepository extends Model
     public function addNameUnit($request)
     {
         $res = BuildingBlock::create([
+            'guid' => Common::getUuid(),
             'building_guid' => $request->building_guid,
             'name' => $request->name,
             'name_unit' => $request->name_unit,

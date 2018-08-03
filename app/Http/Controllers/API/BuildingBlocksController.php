@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Handler\Common;
 use App\Http\Requests\API\BuildingBlocksRequest;
 use App\Models\Area;
 use App\Models\Building;
 use App\Models\BuildingBlock;
 use App\Models\City;
 use App\Repositories\BuildingBlocksRepository;
+use App\Services\BuildingBlocksService;
+use App\Services\BuildingsService;
 use Illuminate\Http\Request;
 
 class BuildingBlocksController extends APIBaseController
@@ -130,6 +133,15 @@ class BuildingBlocksController extends APIBaseController
             $city_box[] = $city_item; // 所有城市
         }
         return $this->sendResponse($city_box, '获取成功');
+    }
+
+    // 通过楼座获取城市
+    public function adoptBuildingBlockGetCity(
+        Request $request,
+        BuildingBlocksService $service
+    )
+    {
+        return $service->adoptBuildingBlockGetCity($request);
     }
 
 }
