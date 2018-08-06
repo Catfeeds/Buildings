@@ -27,5 +27,4 @@ class LoginController extends APIBaseController
         $result = $loginService->logout('api');
         return $this->sendResponse($result, '退出成功！');
     }
-
 }
