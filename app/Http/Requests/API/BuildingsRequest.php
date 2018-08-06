@@ -91,7 +91,6 @@ class BuildingsRequest extends FormRequest
                     'parking_fee' => 'nullable|numeric|max:10000',
                     'greening_rate' => 'nullable|numeric|max:100',
 
-                    'company' => 'array',
                     'album' => 'array',
                     'big_album' => 'array',
                     'describe' => 'max:65535',
@@ -130,7 +129,6 @@ class BuildingsRequest extends FormRequest
                     'parking_fee' => 'nullable|numeric|max:10000',
                     'greening_rate' => 'nullable|numeric|max:100',
 
-                    'company' => 'array',
                     'album' => 'array',
                     'big_album' => 'array',
                     'describe' => 'max:65535',

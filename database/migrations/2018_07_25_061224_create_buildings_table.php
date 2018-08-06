@@ -33,7 +33,6 @@ class CreateBuildingsTable extends Migration
             $table->decimal('parking_fee')->nullable()->comment('停车费 --元/月');
             $table->integer('greening_rate')->nullable()->comment('绿化率 --%');
 
-            $table->json('company')->nullable()->comment('入驻企业');
             $table->json('album')->nullable()->comment('楼盘相册');
             $table->json('big_album')->nullable()->comment('楼盘大图相册');
             $table->text('describe')->nullable()->comment('楼盘描述');

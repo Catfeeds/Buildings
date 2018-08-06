@@ -74,7 +74,6 @@ class BuildingsRepository extends Model
                 'parking_fee' => $request->parking_fee,
                 'greening_rate' => $request->greening_rate,
 
-                'company' => $request->company,
                 'album' => $request->album,
                 'big_album' => $request->big_album,
 
@@ -127,7 +126,6 @@ class BuildingsRepository extends Model
             $building->parking_num = $request->parking_num;
             $building->parking_fee = $request->parking_fee;
             $building->greening_rate = $request->greening_rate;
-            $building->company = $request->company;
             $building->album = $request->album;
             $building->big_album = $request->big_album;
             $building->describe = $request->describe;
