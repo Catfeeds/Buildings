@@ -18,9 +18,9 @@ class BuildingsRepository extends Model
     {
         $result = Building::with('buildingBlock', 'area', 'block')->orderBy('updated_at', 'desc');
 
-        if ($request->city_guid && $request->area_guid && $request->building_guid) {
-            $result = $result->where(['id' => $request->building_guid]);
-        } elseif ($request->city_guid && $request->area_guid && empty($request->building_guid)) {
+        if ($request->area_guid && $request->building_guid) {
+            $result = $result->where(['guid' => $request->building_guid]);
+        } elseif ($request->area_guid && empty($request->building_guid)) {
             $buildingGuid = array_column(Area::find($request->area_guid)->building->flatten()->toArray(), 'guid');
             $result = $result->whereIn('guid', $buildingGuid);
         } elseif ($request->city_guid && empty($request->area_guid) && empty($request->building_guid)) {
@@ -39,6 +39,7 @@ class BuildingsRepository extends Model
         }
 
         $buildings = $result->paginate($request->per_page??10);
+
         foreach($buildings as $v) {
             $service->getAddress($v);
         }
