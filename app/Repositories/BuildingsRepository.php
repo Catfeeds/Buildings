@@ -61,7 +61,6 @@ class BuildingsRepository extends Model
                 'x' => $request->gps[0],
                 'y' => $request->gps[1],
 
-                'type' => $request->type,
                 'area_guid' => $request->area_guid,
                 'block_guid' => $request->block_guid,
                 'address' => $request->address,
@@ -115,7 +114,6 @@ class BuildingsRepository extends Model
             $building->gps = $request->gps;
             $building->x = $request->gps[0];
             $building->y = $request->gps[1];
-            $building->type = $request->type;
             $building->area_guid = $request->area_guid;
             $building->block_guid = $request->block_guid;
             $building->address = $request->address;

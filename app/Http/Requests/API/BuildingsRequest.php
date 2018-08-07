@@ -67,7 +67,6 @@ class BuildingsRequest extends FormRequest
                         )
                     ],
                     'gps' => 'required',
-                    'type' => 'required|numeric|between:1,3',
                     'area_guid' => [
                         'required',
                         'max:32',
@@ -105,7 +104,6 @@ class BuildingsRequest extends FormRequest
                         Rule::unique('buildings')->ignore($this->route('building')->guid,'guid'),
                     ],
                     'gps' => 'required',
-                    'type' => 'required|numeric|between:1,3',
                     'area_guid' => [
                         'required',
                         'max:32',

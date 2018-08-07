@@ -21,7 +21,7 @@ class Common
     public static function getUuid()
     {
         $uuid1 = Uuid::uuid1();
-        return $uuid1->getHex();//返回16进制值
+        return $uuid1->getHex();
     }
 
     // 获取七牛token

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cebe0162d5c48837dc3a8e8badc5c4d4",
+    "content-hash": "734cf294a661da2fb42605a6151760f5",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -425,6 +425,56 @@
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
             "time": "2016-07-18T04:51:16+00:00"
+        },
+        {
+            "name": "fukuball/jieba-php",
+            "version": "0.33",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fukuball/jieba-php.git",
+                "reference": "a5980dc88ae98a261a0bdb1130be14d0136b373f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fukuball/jieba-php/zipball/a5980dc88ae98a261a0bdb1130be14d0136b373f",
+                "reference": "a5980dc88ae98a261a0bdb1130be14d0136b373f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.4.1",
+                "satooshi/php-coveralls": "dev-master",
+                "squizlabs/php_codesniffer": "1.5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/class/Jieba.php",
+                    "src/class/JiebaAnalyse.php",
+                    "src/class/Finalseg.php",
+                    "src/class/Posseg.php",
+                    "src/vendor/multi-array/MultiArray.php",
+                    "src/vendor/multi-array/Factory/MultiArrayFactory.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "fukuball",
+                    "email": "fukuball@gmail.com"
+                }
+            ],
+            "description": "結巴中文分詞（PHP 版本）：做最好的 PHP 中文分詞、中文斷詞組件",
+            "keywords": [
+                "Jieba",
+                "php"
+            ],
+            "time": "2017-11-22T10:02:12+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

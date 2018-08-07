@@ -55,6 +55,9 @@ Route::group(['namespace' => 'API'], function () {
 
         // 通过楼座获取城市
         Route::get('/adopt_building_block_get_city', 'BuildingBlocksController@adoptBuildingBlockGetCity');
+
+        // 关键字管理
+        Route::resource('/building_keywords', 'BuildingKeywordsController');
     });
 
 });
