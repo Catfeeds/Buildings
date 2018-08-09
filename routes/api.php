@@ -58,6 +58,10 @@ Route::group(['namespace' => 'API'], function () {
 
         // 关键字管理
         Route::resource('/building_keywords', 'BuildingKeywordsController');
+
+
+        // 所有下拉
+        Route::get('get_all_select', 'CitiesController@getAllSelect');
     });
 
 });

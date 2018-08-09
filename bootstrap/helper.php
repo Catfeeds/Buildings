@@ -1,4 +1,5 @@
 <?php
+use \Illuminate\Support\Facades\Hash;
 
 /**
  * 全局辅助函数 放置处
@@ -29,4 +30,28 @@ if (!function_exists('include_route_files')) {
         }
     }
 
+}
+
+if (!function_exists('curl')) {
+    function curl($url, $method, $data = null)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['safeString'.':'.Hash::make('chulouwang'.date('Y-m-d',time()))]);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        if ($method == 'post') {
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        } elseif ($method == 'put') {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        } elseif ($method == 'delete') {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+        }
+
+        $res = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($res);
+    }
 }

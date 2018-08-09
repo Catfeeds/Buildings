@@ -10,6 +10,12 @@ class Area extends BaseModel
         return $this->belongsTo(City::class);
     }
 
+    // 区域管理商圈
+    public function block()
+    {
+        return $this->hasMany('App\Models\Block','area_guid','guid');
+    }
+
     // 楼盘
     public function building()
     {

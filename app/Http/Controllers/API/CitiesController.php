@@ -65,4 +65,46 @@ class CitiesController extends APIBaseController
         return $this->sendResponse($citys,'获取所有城市成功');
     }
 
+    // 获取下拉数据
+    public function getAllSelect(Request $request)
+    {
+        if (!in_array($request->number, [1,2,3]) && $request->number) return $this->sendError('参数错误');
+
+        $all = City::with('area.block.building.buildingBlock')->get();
+
+        $citys = array();
+        foreach ($all as $cityKey => $city) {
+            $citys[$cityKey]['value'] = $city->guid;
+            $citys[$cityKey]['label'] = $city->name;
+
+            if ($request->number == 1) continue;
+
+            $areas = array();
+            foreach ($city->area as $areaKey => $area) {
+                $areas[$areaKey]['value'] = $area->guid;
+                $areas[$areaKey]['label'] = $area->name;
+
+                if ($request->number == 2) continue;
+
+                $blocks = array();
+                foreach ($area->block as $blockKey => $block) {
+                    $blocks[$blockKey]['value'] = $block->guid;
+                    $blocks[$blockKey]['label'] = $block->name;
+
+                    if ($request->number == 3) continue;
+
+                    $buildings = array();
+                    foreach ($block->building as $buildingKey => $building) {
+                        $buildings[$buildingKey]['value'] = $building->guid;
+                        $buildings[$buildingKey]['label'] = $building->name;
+                    }
+                    $blocks[$blockKey]['children'] = $buildings;
+                }
+                $areas[$areaKey]['children'] = $blocks;
+            }
+            $citys[$cityKey]['children'] = $areas;
+        }
+
+        return $this->sendResponse($citys,'获取下拉数据成功');
+    }
 }

@@ -18,12 +18,14 @@ class BuildingsRepository extends Model
     {
         $result = Building::with('buildingBlock', 'area', 'block')->orderBy('updated_at', 'desc');
 
-        if ($request->area_guid && $request->building_guid) {
+        if ($request->building_guid) {
             $result = $result->where(['guid' => $request->building_guid]);
-        } elseif ($request->area_guid && empty($request->building_guid)) {
+        } elseif ($request->block_guid) {
+            $request = $result->where('block_guid', $request->block_guid);
+        } elseif ($request->area_guid) {
             $buildingGuid = array_column(Area::find($request->area_guid)->building->flatten()->toArray(), 'guid');
             $result = $result->whereIn('guid', $buildingGuid);
-        } elseif ($request->city_guid && empty($request->area_guid) && empty($request->building_guid)) {
+        } elseif ($request->city_guid) {
             // 通过城市查出区域
             $areaGuids = Area::where('city_guid', $request->city_guid)->pluck('guid')->toArray();
 
