@@ -11,6 +11,7 @@
         "laravel/framework": "5.5.*",
         "laravel/passport": "4.0",
         "laravel/tinker": "~1.0",
+        "overtrue/laravel-pinyin": "~3.0",
         "qiniu/php-sdk": "^7.2",
         "ramsey/uuid": "^3.7"
     },

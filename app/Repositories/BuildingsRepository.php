@@ -6,6 +6,8 @@ use App\Handler\Common;
 use App\Models\Area;
 use App\Models\Building;
 use App\Models\BuildingBlock;
+use App\Models\BuildingKeyword;
+use App\Services\BuildingKeywordsService;
 use Illuminate\Database\Eloquent\Model;
 
 class BuildingsRepository extends Model
@@ -94,6 +96,14 @@ class BuildingsRepository extends Model
                 ]);
                 if (empty($addBuildingBlock)) throw new \Exception('楼栋添加失败');
             }
+
+            // 添加关键字
+            $buildingKeywordService = new BuildingKeywordsService();
+            $string = $buildingKeywordService->keyword($building);
+            BuildingKeyword::create([
+                'building_guid' => $building->guid,
+                'keywords' => $string
+            ]);
 
             \DB::commit();
             return true;

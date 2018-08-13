@@ -179,6 +179,9 @@ return [
 
         // passport
         Laravel\Passport\PassportServiceProvider::class,
+
+        // 汉子转拼音
+        Overtrue\LaravelPinyin\ServiceProvider::class,
     ],
 
     /*
@@ -227,7 +230,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,
     ],
 
 ];

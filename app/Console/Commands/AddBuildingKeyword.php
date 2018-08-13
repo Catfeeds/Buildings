@@ -4,9 +4,11 @@ namespace App\Console\Commands;
 
 use App\Models\Building;
 use App\Models\BuildingKeyword;
+use App\Services\BuildingKeywordsService;
 use Fukuball\Jieba\Finalseg;
 use Fukuball\Jieba\Jieba;
 use Illuminate\Console\Command;
+use Overtrue\LaravelPinyin\Facades\Pinyin;
 
 class AddBuildingKeyword extends Command
 {
@@ -56,29 +58,9 @@ class AddBuildingKeyword extends Command
 
         $buildings = Building::with('block', 'area.city')->get();
 
+        $service = new BuildingKeywordsService();
         foreach ($buildings as $key => $v) {
-            $buildingName = $v->name;   // 楼盘名
-            $blockName = empty($v->block)?'':$v->block->name;   // 商圈名
-            $areaName = $v->area->name; // 区域名
-            $cityName = $v->area->city->name;   // 城市名
-            $string = $buildingName.$blockName.$areaName.$cityName;
-
-            // 切词之后的字符串
-            $jbArray = Jieba::cutForSearch($string);
-
-            // 字符串长度
-            $length = mb_strlen($string, 'utf-8');
-            $array = [];
-            for ($i=0; $i<$length; $i++) {
-                $array[] = mb_substr($string, $i, 1, 'utf-8');
-            }
-
-            // 楼盘名
-            $array[] = $buildingName;
-
-            $endString = array_unique(array_merge($array, $jbArray));
-
-            $string = implode(' ', $endString);
+            $string = $service->keyword($v);
 
             $res = BuildingKeyword::create([
                 'building_guid' => $v->guid,

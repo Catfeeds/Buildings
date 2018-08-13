@@ -44,6 +44,8 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->register(Overtrue\LaravelPinyin\ServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
