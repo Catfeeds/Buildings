@@ -69,9 +69,7 @@ class CitiesController extends APIBaseController
     public function getAllSelect(Request $request)
     {
         if (!in_array($request->number, [1,2,3]) && $request->number) return $this->sendError('参数错误');
-
         $all = City::with('area.block.building.buildingBlock')->get();
-
         $citys = array();
         foreach ($all as $cityKey => $city) {
             $citys[$cityKey]['value'] = $city->guid;

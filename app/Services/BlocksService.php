@@ -12,7 +12,7 @@ class BlocksService
     {
         // 获取所有区域
         $areas = Area::get();
-
+        dd($area);
         $data = array();
         foreach ($areas as $area) {
             $block_box = array();

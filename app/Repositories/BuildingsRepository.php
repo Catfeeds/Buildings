@@ -148,5 +148,9 @@ class BuildingsRepository extends Model
             return false;
         }
     }
-
+    // 获取所有楼座名
+    public function allBuilding()
+    {
+        return Building::all();
+    }
 }

@@ -90,4 +90,19 @@ class BlocksController extends APIBaseController
         $result= $blocksService->allBuildingBlock();
         return $this->sendResponse($result,'所有商圈信息获取成功');
     }
+
+    // 所有商圈
+    public function allBlock
+    (
+        BlocksRepository $repository
+    )
+    {
+        $res = $repository->allBlock();
+        return $this->sendResponse($res->map(function ($v){
+            return [
+                'value' => $v->guid,
+                'name' => $v->name,
+            ];
+        }),'获取成功');
+    }
 }
