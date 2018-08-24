@@ -135,4 +135,18 @@ class BuildingsController extends APIBaseController
         }
         return $this->sendResponse($city_box, '获取成功');
     }
+    // 获取所有楼座
+    public function allBuilding
+    (
+        BuildingsRepository $repository
+    )
+    {
+        $res = $repository->allBuilding();
+        return $this->sendResponse($res->map(function ($v){
+            return [
+                'value' => $v->guid,
+                'name' => $v->name,
+            ];
+        }),'获取成功');
+    }
 }

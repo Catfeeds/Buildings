@@ -101,4 +101,9 @@ class BlocksRepository extends Model
             return false;
         }
     }
+
+    public function allBlock()
+    {
+        return Block::all();
+    }
 }
