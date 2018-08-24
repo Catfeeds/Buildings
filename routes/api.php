@@ -61,17 +61,19 @@ Route::group(['namespace' => 'API'], function () {
 
         // 关键字管理
         Route::resource('/building_keywords', 'BuildingKeywordsController');
-
-//
-//        // 所有下拉
+        // 安全验证
+    Route::group(['middleware' => 'safe.validate'], function () {
+        // 所有下拉
         Route::get('get_all_select', 'CitiesController@getAllSelect');
 
         // 所有商圈
        Route::get('all_block','BlocksController@allBlock');
 
        // 所有楼座
-      Route::get('all_building','BuildingsController@allBuilding');
-//    });
+       Route::get('all_building','BuildingsController@allBuilding');
+        });
 
-});
+    });
+
+//});
 
