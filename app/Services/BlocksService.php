@@ -16,7 +16,7 @@ class BlocksService
         $data = array();
         foreach ($areas as $area) {
             $block_box = array();
-            $blocks = Block::where('area_guid', $area->guid)->orderBy('recommend', 'desc')->get();
+            $blocks = Block::where('area_guid', $area->guid)->get();
             foreach ($blocks as $block) {
                 $res['id'] = $block->guid;
                 $res['name'] = $block->name;
