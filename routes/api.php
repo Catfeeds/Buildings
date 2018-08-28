@@ -42,8 +42,7 @@ Route::group(['namespace' => 'API'], function () {
 
         // 拿到楼盘下的所有楼座
         Route::resource('/building_blocks', 'BuildingBlocksController');
-        // 所有的楼座下拉数据
-        Route::get('/building_blocks_all', 'BuildingBlocksController@buildingBlocksSelect');
+
         // 楼座分页列表
         Route::get('/building_blocks_list', 'BuildingBlocksController@allBlocks');
         // 修改某个楼座的名称
@@ -70,6 +69,9 @@ Route::group(['namespace' => 'API'], function () {
 
         // 所有楼座
         Route::get('all_building','BuildingsController@allBuilding');
+
+        // 所有的楼座下拉数据
+        Route::get('/building_blocks_all', 'BuildingBlocksController@buildingBlocksSelect');
     });
 
 });
