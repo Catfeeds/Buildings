@@ -113,4 +113,48 @@ class CitiesController extends APIBaseController
 
         return $this->sendResponse($citys,'获取下拉数据成功');
     }
+
+    // 获取楼盘,楼座关联基础数据
+    public function getBuildingBlock(
+        Request $request
+    )
+    {
+        if (empty($request->city_name)) {
+            $all = City::with('area.block.building.buildingBlock')->get();
+        } else {
+            $all = City::where('name', $request->city_name)->with('area.block.building.buildingBlock')->get();
+        }
+
+        $data = array();
+        foreach ($all as $cityKey => $city) {
+            foreach ($city->area as $areaKey => $area) {
+                foreach ($area->block as $blockKey => $block) {
+                    $buildings = array();
+                    foreach ($block->building as $buildingKey => $building) {
+                        $buildings[$buildingKey]['value'] = $building->guid;
+                        $buildings[$buildingKey]['label'] = $building->name;
+                        $buildingBlocks = array();
+                        foreach ($building->buildingBlock as $buildingBlocKey => $buildingBlock) {
+                            $buildingBlocks[$buildingBlocKey]['value'] = $buildingBlock->guid;
+                            $buildingBlocks[$buildingBlocKey]['label'] = $buildingBlock->name.$buildingBlock->name_unit;
+                        }
+                        $buildings[$buildingKey]['children'] = $buildingBlocks;
+                    }
+                    $data[] = $buildings;
+                }
+            }
+        }
+
+        $datas = array();
+        foreach ($data as $v) {
+            foreach ($v as $val) {
+                $datas[] = $val;
+            }
+        }
+
+        return $this->sendResponse($datas,'获取下拉数据成功');
+    }
+
+
+
 }

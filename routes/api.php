@@ -72,7 +72,12 @@ Route::group(['namespace' => 'API'], function () {
 
         // 所有的楼座下拉数据
         Route::get('/building_blocks_all', 'BuildingBlocksController@buildingBlocksSelect');
+
+
+
     });
+    //
+    Route::get('/get_building_block', 'CitiesController@getBuildingBlock');
 
 });
 
