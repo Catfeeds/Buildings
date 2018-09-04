@@ -19,7 +19,6 @@ class LoginService
     {
         try {
             $http = new Client();
-
             $result = $http->post(url('/oauth/token'), [
                 'form_params' => [
                     'grant_type' => 'password',

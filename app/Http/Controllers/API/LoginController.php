@@ -15,7 +15,6 @@ class LoginController extends APIBaseController
     {
         $passport = $loginService->applyPasswordToken($request->name, $request->password);
         if (empty($passport['success'])) return $this->sendError($passport['message']);
-
         return $this->sendResponse(['status' => true, 'token' => $passport['token']], '获取token成功！');
     }
 

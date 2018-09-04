@@ -8,10 +8,7 @@ Route::group(['namespace' => 'API'], function () {
     // 登录
     Route::resource('/login', 'LoginController');
 
-    // 所有下拉
-    Route::get('get_all_select', 'CitiesController@getAllSelect');
-
-//    Route::group(['middleware' => ['auth:api']], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
         // 退出
         Route::post('logout','LoginController@logout');
         // 用户
@@ -61,19 +58,20 @@ Route::group(['namespace' => 'API'], function () {
 
         // 关键字管理
         Route::resource('/building_keywords', 'BuildingKeywordsController');
-        // 安全验证
+
+
+    });
+    // 安全验证
     Route::group(['middleware' => 'safe.validate'], function () {
         // 所有下拉
         Route::get('get_all_select', 'CitiesController@getAllSelect');
 
         // 所有商圈
-       Route::get('all_block','BlocksController@allBlock');
+        Route::get('all_block','BlocksController@allBlock');
 
-       // 所有楼座
-       Route::get('all_building','BuildingsController@allBuilding');
-        });
-
+        // 所有楼座
+        Route::get('all_building','BuildingsController@allBuilding');
     });
 
-//});
+});
 
