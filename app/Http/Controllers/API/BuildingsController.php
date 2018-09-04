@@ -135,6 +135,7 @@ class BuildingsController extends APIBaseController
         }
         return $this->sendResponse($city_box, '获取成功');
     }
+
     // 获取所有楼座
     public function allBuilding
     (

@@ -10,7 +10,7 @@ Route::group(['namespace' => 'API'], function () {
 
     Route::group(['middleware' => ['auth:api']], function () {
         // 退出
-        Route::post('logout','LoginController@logout');
+        Route::post('logout', 'LoginController@logout');
         // 用户
         Route::resource('/users', 'UsersController');
         // 七牛token
@@ -42,8 +42,7 @@ Route::group(['namespace' => 'API'], function () {
 
         // 拿到楼盘下的所有楼座
         Route::resource('/building_blocks', 'BuildingBlocksController');
-        // 所有的楼座下拉数据
-        Route::get('/building_blocks_all', 'BuildingBlocksController@buildingBlocksSelect');
+
         // 楼座分页列表
         Route::get('/building_blocks_list', 'BuildingBlocksController@allBlocks');
         // 修改某个楼座的名称
@@ -58,9 +57,8 @@ Route::group(['namespace' => 'API'], function () {
 
         // 关键字管理
         Route::resource('/building_keywords', 'BuildingKeywordsController');
-
-
     });
+
     // 安全验证
     Route::group(['middleware' => 'safe.validate'], function () {
         // 所有下拉
@@ -71,7 +69,14 @@ Route::group(['namespace' => 'API'], function () {
 
         // 所有楼座
         Route::get('all_building','BuildingsController@allBuilding');
+
+        // 所有的楼座下拉数据
+        Route::get('/building_blocks_all', 'BuildingBlocksController@buildingBlocksSelect');
+
+
+
     });
+    //
+    Route::get('/get_building_block', 'CitiesController@getBuildingBlock');
 
 });
-

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Handler\Common;
 use App\Http\Requests\API\BuildingBlocksRequest;
 use App\Models\Area;
 use App\Models\Building;
@@ -10,7 +9,6 @@ use App\Models\BuildingBlock;
 use App\Models\City;
 use App\Repositories\BuildingBlocksRepository;
 use App\Services\BuildingBlocksService;
-use App\Services\BuildingsService;
 use Illuminate\Http\Request;
 
 class BuildingBlocksController extends APIBaseController
@@ -89,9 +87,15 @@ class BuildingBlocksController extends APIBaseController
     }
 
     // 所有的楼座下拉数据
-    public function buildingBlocksSelect()
+    public function buildingBlocksSelect(
+        Request $request
+    )
     {
-        $cities = City::all();
+        if (empty($request->city_name)) {
+            $cities = City::all();
+        } else {
+            $cities = City::where('name', $request->city_name)->get();
+        }
         $city_box = array();
         foreach ($cities as $index => $city) {
             // 循环城市 将区域的
