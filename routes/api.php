@@ -80,5 +80,3 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('/get_building_block', 'CitiesController@getBuildingBlock');
 
 });
-
-
