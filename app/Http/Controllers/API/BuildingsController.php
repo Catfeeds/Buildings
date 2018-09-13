@@ -147,6 +147,10 @@ class BuildingsController extends APIBaseController
             return [
                 'value' => $v->guid,
                 'name' => $v->name,
+                'data' => json_encode([
+                    'guid' => $v->guid,
+                    'name' => $v->name
+                ],JSON_UNESCAPED_UNICODE),
             ];
         }),'获取成功');
     }
