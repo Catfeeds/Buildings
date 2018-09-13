@@ -91,10 +91,10 @@ class BuildingBlocksController extends APIBaseController
         Request $request
     )
     {
-        if (empty($request->city_name)) {
+        if (empty($request->city_guid)) {
             $cities = City::all();
         } else {
-            $cities = City::where('name', $request->city_name)->get();
+            $cities = City::where('guid', $request->city_guid)->get();
         }
         $city_box = array();
         foreach ($cities as $index => $city) {

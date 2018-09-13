@@ -72,10 +72,10 @@ class CitiesController extends APIBaseController
     {
         if (!in_array($request->number, [1,2,3]) && $request->number) return $this->sendError('参数错误');
 
-        if (empty($request->city_name)) {
+        if (empty($request->city_guid)) {
             $all = City::with('area.block.building.buildingBlock')->get();
         } else {
-            $all = City::where('name', $request->city_name)->with('area.block.building.buildingBlock')->get();
+            $all = City::where('guid', $request->city_guid)->with('area.block.building.buildingBlock')->get();
         }
 
         $citys = array();
