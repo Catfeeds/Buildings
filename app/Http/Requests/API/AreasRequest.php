@@ -38,6 +38,10 @@ class AreasRequest extends FormRequest
                     'city_guid.in' => '城市必须存在',
                     'name.unique' => '该区域名已存在'
                 ];
+            case 'getCompanyArea':
+                return [
+                    'area_guid' => '区域必须存在'
+                ];
             default:
                 {
                     return [];
@@ -84,6 +88,16 @@ class AreasRequest extends FormRequest
                         'required',
                         'max:32',
                         Rule::unique('areas')->ignore($this->route('area')->guid,'guid'),
+                    ]
+                ];
+            case 'getCompanyArea':
+                return [
+                    'area_guid' => [
+                        'required',
+                        'max:32',
+                        Rule::in(
+                            Area::all()->pluck('guid')->toArray()
+                        )
                     ]
                 ];
             default:

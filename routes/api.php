@@ -5,6 +5,8 @@ header('Access-Control-Allow-Headers:X-Token,Content-Type,Authorization,safeStri
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 
 Route::group(['namespace' => 'API'], function () {
+    Route::get('get_all_select', 'CitiesController@getAllSelect');
+
     // 登录
     Route::resource('/login', 'LoginController');
 
@@ -57,12 +59,12 @@ Route::group(['namespace' => 'API'], function () {
 
         // 关键字管理
         Route::resource('/building_keywords', 'BuildingKeywordsController');
+
     });
 
     // 安全验证
     Route::group(['middleware' => 'safe.validate'], function () {
         // 所有下拉
-        Route::get('get_all_select', 'CitiesController@getAllSelect');
 
         // 所有商圈
         Route::get('all_block','BlocksController@allBlock');
@@ -79,4 +81,7 @@ Route::group(['namespace' => 'API'], function () {
     //
     Route::get('/get_building_block', 'CitiesController@getBuildingBlock');
 
+
+    // 获取公司所在区域
+    Route::get('get_company_area','AreasController@getCompanyArea');
 });

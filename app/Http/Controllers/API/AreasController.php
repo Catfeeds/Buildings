@@ -89,4 +89,20 @@ class AreasController extends APIBaseController
         return $this->sendResponse($city_box, '获取成功');
     }
 
+    // 获取公司所在地区域
+    public function getCompanyArea
+    (
+        AreasRequest $request
+    )
+    {
+        $area = Area::where('guid',$request->area_guid)->get();
+        $areas = $area->map(function($area) {
+            return [
+                'value' => $area->guid,
+                'label' => $area->name
+            ];
+        });
+
+        return $this->sendResponse($areas,'获取公司所在区域成功');
+    }
 }
