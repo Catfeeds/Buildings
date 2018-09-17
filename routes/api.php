@@ -73,10 +73,9 @@ Route::group(['namespace' => 'API'], function () {
         // 所有的楼座下拉数据
         Route::get('/building_blocks_all', 'BuildingBlocksController@buildingBlocksSelect');
 
-
-
+        // 获取楼盘,楼座关联基础数据
+        Route::get('/get_building_block', 'CitiesController@getBuildingBlock');
     });
-    //
-    Route::get('/get_building_block', 'CitiesController@getBuildingBlock');
+
 
 });
