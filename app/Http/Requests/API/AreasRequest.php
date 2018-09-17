@@ -40,7 +40,7 @@ class AreasRequest extends FormRequest
                 ];
             case 'getCompanyArea':
                 return [
-                    'area_guid' => '区域必须存在'
+                    'city_guid.in' => '区域必须存在'
                 ];
             default:
                 {
