@@ -92,11 +92,11 @@ class AreasRequest extends FormRequest
                 ];
             case 'getCompanyArea':
                 return [
-                    'area_guid' => [
+                    'city_guid' => [
                         'required',
                         'max:32',
                         Rule::in(
-                            Area::all()->pluck('guid')->toArray()
+                            City::all()->pluck('guid')->toArray()
                         )
                     ]
                 ];
