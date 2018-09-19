@@ -136,6 +136,7 @@ class BuildingBlocksController extends APIBaseController
             );
             $city_box[] = $city_item; // 所有城市
         }
+
         return $this->sendResponse($city_box, '获取成功');
     }
 
