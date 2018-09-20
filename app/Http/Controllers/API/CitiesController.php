@@ -119,29 +119,27 @@ class CitiesController extends APIBaseController
         Request $request
     )
     {
-        if (empty($request->city_name)) {
+        if (empty($request->city_guid)) {
             $all = City::with('area.block.building.buildingBlock')->get();
         } else {
-            $all = City::where('name', $request->city_name)->with('area.block.building.buildingBlock')->get();
+            $all = City::where('guid', $request->city_guid)->with('area.block.building.buildingBlock')->get();
         }
 
         $data = array();
         foreach ($all as $cityKey => $city) {
             foreach ($city->area as $areaKey => $area) {
-                foreach ($area->block as $blockKey => $block) {
-                    $buildings = array();
-                    foreach ($block->building as $buildingKey => $building) {
-                        $buildings[$buildingKey]['value'] = $building->guid;
-                        $buildings[$buildingKey]['label'] = $building->name;
-                        $buildingBlocks = array();
-                        foreach ($building->buildingBlock as $buildingBlocKey => $buildingBlock) {
-                            $buildingBlocks[$buildingBlocKey]['value'] = $buildingBlock->guid;
-                            $buildingBlocks[$buildingBlocKey]['label'] = $buildingBlock->name.$buildingBlock->name_unit;
-                        }
-                        $buildings[$buildingKey]['children'] = $buildingBlocks;
+                $buildings = array();
+                foreach ($area->building as $buildingKey => $building) {
+                    $buildings[$buildingKey]['value'] = $building->guid;
+                    $buildings[$buildingKey]['label'] = $building->name;
+                    $buildingBlocks = array();
+                    foreach ($building->buildingBlock as $buildingBlocKey => $buildingBlock) {
+                        $buildingBlocks[$buildingBlocKey]['value'] = $buildingBlock->guid;
+                        $buildingBlocks[$buildingBlocKey]['label'] = $buildingBlock->name.$buildingBlock->name_unit;
                     }
-                    $data[] = $buildings;
+                    $buildings[$buildingKey]['children'] = $buildingBlocks;
                 }
+                $data[] = $buildings;
             }
         }
 

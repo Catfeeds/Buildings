@@ -68,7 +68,6 @@ Route::group(['namespace' => 'API'], function () {
 
     });
 
-    
     // 安全验证
     Route::group(['middleware' => 'safe.validate'], function () {
         // 所有下拉
