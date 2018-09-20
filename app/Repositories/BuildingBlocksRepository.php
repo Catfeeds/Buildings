@@ -10,20 +10,15 @@ use Illuminate\Database\Eloquent\Model;
 class BuildingBlocksRepository extends Model
 {
     // 拿到楼盘下的所有楼座
-    public function getAllBuildingBlock(
-        $request
-    )
+    public function getAllBuildingBlock($request)
     {
         return BuildingBlock::where('building_guid', $request->building_guid)->with('building.area')->get();
     }
     
     // 获取所有楼座的列表
-    public function getList(
-        $per_page,
-        $request
-    )
+    public function getList($request)
     {
-        $buildingBlock = BuildingBlock::with('building.area')->orderBy('updated_at', 'desc');
+        $buildingBlock = BuildingBlock::with('building.area');
         if (!empty($request->area_guid)) {
             // 传了城区 查城区下的楼盘 再查楼盘下的楼座
             $buildings = Building::where('area_guid', $request->area_guid)->get()->pluck('guid')->toArray();
@@ -33,7 +28,7 @@ class BuildingBlocksRepository extends Model
             $result = $buildingBlock->where('building_guid', $request->building_guid);
         }
         if (empty($request->area_guid) && empty($request->building_guid)) $result = $buildingBlock;
-        return $result->paginate($per_page);
+        return $result->get();
     }
 
     // 修改单个楼座的单元和楼座名称
@@ -80,5 +75,23 @@ class BuildingBlocksRepository extends Model
         $buildingBlock->president_lift = $request->president_lift;
 
         return $buildingBlock->save();
+    }
+
+    // 更新排序
+    public function updateSort($request)
+    {
+        $weight = $request->weight;
+        \DB::beginTransaction();
+        try {
+            foreach ($weight as $k => $v) {
+                BuildingBlock::where('guid', $v)->update(['weight' => $k]);
+            }
+            \DB::commit();
+            return true;
+        } catch (\Exception $exception) {
+            \DB::rollback();
+            \Log::error('更新失败'.$exception->getMessage());
+            return false;
+        }
     }
 }

@@ -2,8 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class Area extends BaseModel
 {
+    // 全局作用域 排序
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(function(Builder $builder) {
+            $builder->orderBy('weight', 'asc');
+        });
+
+    }
+
     // 城市
     public function city()
     {

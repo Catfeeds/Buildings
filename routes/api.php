@@ -21,12 +21,18 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('/get_all_city', 'CitiesController@getAllCity');
         // 区域
         Route::resource('/areas', 'AreasController');
+
+        // 排序
+        Route::post('area_sort', 'AreasController@areaSort');
+
         // 获取所有区域
         Route::get('/get_all_area', 'AreasController@getAllArea');
         // 所有区的下拉数据
         Route::get('/areas_select', 'AreasController@areasSelect');
         // 商圈
         Route::resource('/blocks', 'BlocksController');
+
+
         // 某区域下拉数据
         Route::get('/blocks_select', 'BlocksController@blocksSelect');
         // 获取所有商圈基础地理位置
@@ -42,6 +48,8 @@ Route::group(['namespace' => 'API'], function () {
 
         // 拿到楼盘下的所有楼座
         Route::resource('/building_blocks', 'BuildingBlocksController');
+
+        Route::post('building_block_sort', 'BuildingBlocksController@sort');
 
         // 楼座分页列表
         Route::get('/building_blocks_list', 'BuildingBlocksController@allBlocks');

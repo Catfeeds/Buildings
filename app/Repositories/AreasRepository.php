@@ -19,7 +19,7 @@ class AreasRepository extends Model
             $where = ['city_guid' => $request->city_guid];
         }
 
-        return Area::where($where)->paginate($request->per_page??10);
+        return Area::where($where)->get();
     }
 
     // 添加区域信息
@@ -44,5 +44,23 @@ class AreasRepository extends Model
         $area->name = $request->name;
         if (!$area->save()) return false;
         return true;
+    }
+
+    // 更新排序
+    public function updateSort($request)
+    {
+        $weight = $request->weight;
+        \DB::beginTransaction();
+        try {
+            foreach ($weight as $k => $v) {
+                Area::where('guid', $v)->update(['weight' => $k]);
+            }
+            \DB::commit();
+            return true;
+        } catch (\Exception $exception) {
+            \DB::rollback();
+            \Log::error('更新失败'.$exception->getMessage());
+            return false;
+        }
     }
 }

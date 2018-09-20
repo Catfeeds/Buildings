@@ -2,12 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class BuildingBlock extends BaseModel
 {
     protected $appends = [
         'info',
         'block_info'
     ];
+
+    // 全局作用域 排序
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(function(Builder $builder) {
+            $builder->orderBy('weight', 'asc');
+        });
+
+    }
 
     // 楼盘
     public function building()
