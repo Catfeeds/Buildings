@@ -106,7 +106,6 @@ class BuildingBlocksController extends APIBaseController
                 $building_box = array();
                 foreach ($buildings as $building) {
                     $buildingBlocks = BuildingBlock::where('building_guid', $building->guid)->get();
-                    $buildingBlocks = $buildingBlocks->sortBy('name')->values();
                     $buildingBlockBox = array();
                     foreach ($buildingBlocks as $buildingBlock) {
                         $item = array(
