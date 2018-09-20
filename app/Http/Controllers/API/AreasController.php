@@ -103,4 +103,16 @@ class AreasController extends APIBaseController
         }
         return $this->sendResponse($area_box, '获取成功');
     }
+    
+    // 更新排序
+    public function areaSort
+    (
+        AreasRequest $request,
+        AreasRepository $repository
+    )
+    {
+        $res = $repository->updateSort($request);
+        if (!$res) return $this->sendError('排序更新失败');
+        return $this->sendResponse(true,'排序更新成功');
+    }
 }

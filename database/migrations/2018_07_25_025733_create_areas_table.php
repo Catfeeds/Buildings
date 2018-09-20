@@ -17,6 +17,7 @@ class CreateAreasTable extends Migration
             $table->char('guid',32)->primary()->comment('主键GUID');
             $table->string('name', 32)->comment('区域名');
             $table->char('city_guid',32)->comment('城市guid');
+            $table->integer('weight')->comment('排序权重');
             $table->softDeletes();
             $table->timestamps();
         });

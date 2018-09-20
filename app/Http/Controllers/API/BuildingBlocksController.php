@@ -35,7 +35,7 @@ class BuildingBlocksController extends APIBaseController
         BuildingBlocksRepository $repository
     )
     {
-        $res = $repository->getList($request->per_page, $request);
+        $res = $repository->getList($request);
         return $this->sendResponse($res, '获取成功');
     }
 
@@ -106,7 +106,6 @@ class BuildingBlocksController extends APIBaseController
                 $building_box = array();
                 foreach ($buildings as $building) {
                     $buildingBlocks = BuildingBlock::where('building_guid', $building->guid)->get();
-                    $buildingBlocks = $buildingBlocks->sortBy('name')->values();
                     $buildingBlockBox = array();
                     foreach ($buildingBlocks as $buildingBlock) {
                         $item = array(
@@ -147,6 +146,18 @@ class BuildingBlocksController extends APIBaseController
     )
     {
         return $service->adoptBuildingBlockGetCity($request);
+    }
+
+    // 更新排序
+    public function sort
+    (
+        BuildingBlocksRequest $request,
+        BuildingBlocksRepository $repository
+    )
+    {
+        $res = $repository->updateSort($request);
+        if (!$res) return $this->sendError('排序更新失败');
+        return $this->sendResponse(true,'排序更新成功');
     }
 
 }
