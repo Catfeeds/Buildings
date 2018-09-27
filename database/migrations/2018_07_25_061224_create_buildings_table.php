@@ -15,6 +15,7 @@ class CreateBuildingsTable extends Migration
     {
         Schema::create('buildings', function (Blueprint $table) {
             $table->char('guid',32)->primary()->comment('主键GUID');
+            $table->integer('id')->nullable()->comment('原始id');
             $table->string('name', 128)->nullable()->comment('楼盘名');
             $table->json('gps')->nullable()->comment('gps定位');
             $table->string('x', 32)->nullable()->comment('经度');
