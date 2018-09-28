@@ -35,8 +35,6 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('all_building_blocks', 'BlocksController@allBuildingBlock');
         // 楼盘
         Route::resource('/buildings', 'BuildingsController');
-        // 楼盘下拉
-        Route::get('/buildings_select', 'BuildingsController@buildingSelect');
         // 拿到楼盘下的所有楼座
         Route::resource('/building_blocks', 'BuildingBlocksController');
 
@@ -53,7 +51,6 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('/adopt_building_block_get_city', 'BuildingBlocksController@adoptBuildingBlockGetCity');
         // 关键字管理
         Route::resource('/building_keywords', 'BuildingKeywordsController');
-
     });
 
     // 安全验证
@@ -81,5 +78,8 @@ Route::group(['namespace' => 'API'], function () {
 
         // 楼盘搜索
         Route::get('/building_search_select', 'BuildingsController@buildingSearchSelect');
+
+        // 楼盘下拉
+        Route::get('/buildings_select', 'BuildingsController@buildingSelect');
     });
 });
