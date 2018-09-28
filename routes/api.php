@@ -51,7 +51,6 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('/adopt_building_block_get_city', 'BuildingBlocksController@adoptBuildingBlockGetCity');
         // 关键字管理
         Route::resource('/building_keywords', 'BuildingKeywordsController');
-
     });
 
     // 安全验证
