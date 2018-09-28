@@ -15,8 +15,11 @@ class CreateAreasTable extends Migration
     {
         Schema::create('areas', function (Blueprint $table) {
             $table->char('guid',32)->primary()->comment('主键GUID');
+            $table->integer('id')->nullable()->comment('原始id');
             $table->string('name', 32)->comment('区域名');
             $table->char('city_guid',32)->comment('城市guid');
+            $table->integer('city_id')->nullable()->comment('城市id');
+            $table->integer('weight')->nullable()->comment('排序权重');
             $table->softDeletes();
             $table->timestamps();
         });

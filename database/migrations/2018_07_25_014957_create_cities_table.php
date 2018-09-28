@@ -15,6 +15,7 @@ class CreateCitiesTable extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->char('guid',32)->primary()->comment('主键GUID');
+            $table->integer('id')->nullable()->comment('原始id');
             $table->string('name', 32)->comment('城市名');
             $table->softDeletes();
             $table->timestamps();

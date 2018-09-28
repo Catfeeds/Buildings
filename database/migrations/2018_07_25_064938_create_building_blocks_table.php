@@ -15,7 +15,9 @@ class CreateBuildingBlocksTable extends Migration
     {
         Schema::create('building_blocks', function (Blueprint $table) {
             $table->char('guid',32)->primary()->comment('主键GUID');
+            $table->integer('id')->nullable()->comment('原始id');
             $table->char('building_guid', 32)->comment('所属楼盘guid');
+            $table->integer('building_id')->comment('所属楼盘原始id');
             $table->string('name', 32)->nullable()->comment('楼座名称');
             $table->string('name_unit', 32)->nullable()->comment('楼座单位');
             $table->string('unit', 32)->nullable()->comment('单元名称');
@@ -31,6 +33,7 @@ class CreateBuildingBlocksTable extends Migration
             $table->integer('passenger_lift')->nullable()->comment('客梯数量');
             $table->integer('cargo_lift')->nullable()->comment('货梯数量');
             $table->integer('president_lift')->nullable()->comment('总裁电梯数量');
+            $table->integer('weight')->nullable()->comment('排序权重');
             $table->timestamps();
             $table->softDeletes();
         });
