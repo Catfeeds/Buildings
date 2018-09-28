@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterAreas extends Migration
+class AlterBlocks extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterAreas extends Migration
      */
     public function up()
     {
-        Schema::table('areas', function (Blueprint $table) {
-            $table->integer('weight')->nullable()->comment('排序权重')->after('city_guid');
+        Schema::table('blocks', function (Blueprint $table) {
+            $table->integer('id')->nullable()->comment('商圈原始id')->after('guid');
         });
     }
 
@@ -25,8 +25,8 @@ class AlterAreas extends Migration
      */
     public function down()
     {
-        Schema::table('areas', function (Blueprint $table) {
-            $table->dropColumn('weight');
+        Schema::table('blocks', function (Blueprint $table) {
+            $table->dropColumn('id');
         });
     }
 }
