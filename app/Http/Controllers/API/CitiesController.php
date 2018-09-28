@@ -153,6 +153,4 @@ class CitiesController extends APIBaseController
         return $this->sendResponse($datas,'获取下拉数据成功');
     }
 
-
-
 }

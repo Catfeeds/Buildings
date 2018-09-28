@@ -81,5 +81,6 @@ Route::group(['namespace' => 'API'], function () {
 
         // 楼盘下拉
         Route::get('/buildings_select', 'BuildingsController@buildingSelect');
+
     });
 });
