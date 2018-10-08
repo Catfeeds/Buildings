@@ -60,6 +60,7 @@ class BuildingsRepository extends Model
             // 添加楼盘
             $building = Building::create([
                 'guid' => Common::getUuid(),
+                'entering_company' => $request->entering_company,
                 'name' => $request->name,
                 'gps' => $request->gps,
                 'x' => $request->gps[0],
@@ -123,6 +124,7 @@ class BuildingsRepository extends Model
         try {
             // 修改楼盘
             $building->name = $request->name;
+            $building->entering_company = $request->entering_company;
             $building->gps = $request->gps;
             $building->x = $request->gps[0];
             $building->y = $request->gps[1];

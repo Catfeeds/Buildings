@@ -8,6 +8,7 @@ class Building extends BaseModel
         'gps' => 'array',
         'album' => 'array',
         'big_album' => 'array',
+        'entering_company' => 'array'
     ];
 
     protected $appends = [
@@ -60,12 +61,7 @@ class Building extends BaseModel
                 ];
             });
         } else {
-            return collect([
-                [
-                    'name' => '',
-                    'url' => config('setting.pc_building_default_big_img')
-                ]
-            ]);
+            return [];
         }
     }
 
