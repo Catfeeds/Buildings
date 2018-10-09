@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Services\DingTalkService;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
@@ -49,6 +50,28 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        //错误类型
+        // NotFoundHttpException 404
+        // AuthenticationException 401
+        // ValidationException 字段验证错误
+        // MethodNotFound
+
+        $errorType = ['NotFoundHttpException', 'AuthenticationException', 'ValidationException', 'MethodNotFound', 'ModelNotFoundException'];
+        $temp = explode('\\', get_class($exception));
+        $type = end($temp);
+
+        if (empty(config('app.debug', false))) {
+            if (in_array($type, $errorType)) {
+                //如果报错为以上错误类型,直接结束,不发送消息
+                return parent::render($request, $exception);
+            } else {
+                $errorInfo = $this->errorMessage($exception, $request);
+                // 发送钉钉报错
+                $dingTalkService = new DingTalkService();
+                $dingTalkService->sendMessages($errorInfo);
+            }
+        }
+
         if ($exception instanceof ValidationException) {
             $error = array(
                 'success' => false,
@@ -56,7 +79,22 @@ class Handler extends ExceptionHandler
             );
             return response($error, 422);
         }
-
         return parent::render($request, $exception);
+    }
+
+    /**
+     * 说明: 错误信息拼接
+     *
+     * @param $exception
+     * @return string
+     * @author 罗振
+     */
+    public function errorMessage($exception, $request)
+    {
+        $file = $exception->getFile(); // 报错文件
+        $line = $exception->getLine(); // 报错行数
+        $message = $exception->getMessage();    // 报错信息
+        $uri = $request->getRequestUri(); //接口
+        return "路由：".$uri."，报错文件：".$file."，报错行数：".$line."行，报错信息：".$message;
     }
 }

@@ -53,10 +53,13 @@ Route::group(['namespace' => 'API'], function () {
         Route::resource('/building_keywords', 'BuildingKeywordsController');
     });
 
+    // 所有下拉
+    Route::get('get_all_select', 'CitiesController@getAllSelect');
+
     // 安全验证
     Route::group(['middleware' => 'safe.validate'], function () {
         // 所有下拉
-        Route::get('get_all_select', 'CitiesController@getAllSelect');
+//        Route::get('get_all_select', 'CitiesController@getAllSelect');
 
         // 所有商圈
         Route::get('all_block','BlocksController@allBlock');
